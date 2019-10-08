@@ -41,3 +41,15 @@ func CreateArray(t reflect.Type) reflect.Value {
 	arrayType = reflect.SliceOf(t)
 	return reflect.Zero(arrayType)
 }
+
+// New returns new instance with fresh properties of given value
+func New(value interface{}) interface{} {
+	var result interface{}
+	rv := reflect.ValueOf(value)
+	if rv.Kind() == reflect.Ptr {
+		result = reflect.New(rv.Elem().Type()).Interface()
+	} else {
+		result = reflect.New(reflect.TypeOf(value)).Elem().Interface()
+	}
+	return result
+}
