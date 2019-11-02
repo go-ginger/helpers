@@ -42,8 +42,8 @@ func CreateArray(t reflect.Type) reflect.Value {
 	return reflect.Zero(arrayType)
 }
 
-// New returns new instance with fresh properties of given value
-func New(value interface{}) interface{} {
+// NewInstance returns new instance with fresh properties of given value
+func NewInstance(value interface{}) interface{} {
 	var result interface{}
 	rv := reflect.ValueOf(value)
 	if rv.Kind() == reflect.Ptr {
@@ -51,5 +51,17 @@ func New(value interface{}) interface{} {
 	} else {
 		result = reflect.New(reflect.TypeOf(value)).Elem().Interface()
 	}
+	return result
+}
+
+func NewInstanceOfType(typ reflect.Type) interface{} {
+	var result interface{}
+	result = reflect.New(typ).Interface()
+	return result
+}
+
+func NewSliceInstanceOfType(typ reflect.Type) interface{} {
+	var result interface{}
+	result = reflect.MakeSlice(reflect.SliceOf(typ), 0, 0).Interface()
 	return result
 }
