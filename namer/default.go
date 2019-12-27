@@ -17,12 +17,16 @@ func (n *Default) Initialize() {
 	n.sMap = newSafeMap()
 }
 
-func (n *Default) GetName(value interface{}) string {
-	reflectType := reflect.ValueOf(value).Type()
+func (n *Default) GetNameByType(reflectType reflect.Type) string {
 	for reflectType.Kind() == reflect.Slice || reflectType.Kind() == reflect.Ptr {
 		reflectType = reflectType.Elem()
 	}
 	return inflection.Plural(n.getName(reflectType.Name()))
+}
+
+func (n *Default) GetName(value interface{}) string {
+	reflectType := reflect.ValueOf(value).Type()
+	return n.GetNameByType(reflectType)
 }
 
 func (n *Default) getName(name string) string {
@@ -38,7 +42,7 @@ func (n *Default) getName(name string) string {
 	if name == "" {
 		return ""
 	}
-	
+
 	replacer := GetReplacer()
 	var (
 		value                                    = replacer.Replace(name)
