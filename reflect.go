@@ -66,6 +66,12 @@ func NewSliceInstanceOfType(typ reflect.Type) interface{} {
 	return result
 }
 
+func NewSliceInstanceOfTypePtr(typ reflect.Type) interface{} {
+	var result interface{}
+	result = reflect.New(reflect.SliceOf(typ)).Interface()
+	return result
+}
+
 func AppendToSlice(arr interface{}, valuePtr interface{}) (result interface{}) {
 	arrValue := reflect.ValueOf(arr)
 	result = reflect.Append(arrValue, reflect.ValueOf(valuePtr).Elem()).Interface()
