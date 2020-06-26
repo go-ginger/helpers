@@ -101,9 +101,9 @@ func BeforeDump(request gm.IRequest, data interface{}) {
 			addr := s.Addr()
 			if addr.IsValid() && addr.CanInterface() {
 				mv := addr.Interface()
-				if baseModel, ok := mv.(gm.IBaseModel); ok {
-					baseModel.Populate(request)
-				}
+				//if baseModel, ok := mv.(gm.IBaseModel); ok {
+				//	baseModel.Populate(request)
+				//}
 				if cls, ok := mv.(iBeforeDump); ok {
 					cls.BeforeDump(request, mv)
 				}
