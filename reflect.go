@@ -102,7 +102,9 @@ func Clone(inter interface{}) interface{} {
 	nVal := nInter.Elem()
 	for i := 0; i < val.NumField(); i++ {
 		nvField := nVal.Field(i)
-		nvField.Set(val.Field(i))
+		if nvField.CanSet() {
+			nvField.Set(val.Field(i))
+		}
 	}
 	return nInter.Interface()
 }
