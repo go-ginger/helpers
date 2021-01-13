@@ -74,6 +74,9 @@ func NewSliceInstanceOfTypePtr(typ reflect.Type) interface{} {
 
 func AppendToSlice(arr interface{}, valuePtr interface{}) (result interface{}) {
 	arrValue := reflect.ValueOf(arr)
+	if arrValue.Kind() == reflect.Ptr {
+		arrValue = arrValue.Elem()
+	}
 	result = reflect.Append(arrValue, reflect.ValueOf(valuePtr).Elem()).Interface()
 	return
 }
